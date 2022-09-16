@@ -33,7 +33,8 @@ class Storage extends ScratchStorage {
         );
     }
     setProjectHost (projectHost) {
-        this.projectHost = projectHost;
+        //set project host
+        this.projectHost = "http://localhost:3000/api/scratch";
     }
     setProjectToken (projectToken) {
         this.projectToken = projectToken;
@@ -55,8 +56,8 @@ class Storage extends ScratchStorage {
             withCredentials: true
         };
     }
-    setAssetHost (assetHost) {
-        this.assetHost = assetHost;
+    setAssetHost (assetHost){
+        this.assetHost = "http://localhost:3000/api/scratch";
     }
     getAssetGetConfig (asset) {
         return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;

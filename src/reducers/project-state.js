@@ -492,9 +492,11 @@ const autoUpdateProject = () => ({
     type: START_AUTO_UPDATING
 });
 
-const manualUpdateProject = () => ({
-    type: START_MANUAL_UPDATING
-});
+const manualUpdateProject = () => {
+    console.log("PROJECT DATA " + JSON.stringify(initialState.projectData))
+    console.log("manual update");
+    return {type: START_MANUAL_UPDATING};
+};
 
 const saveProjectAsCopy = () => ({
     type: START_UPDATING_BEFORE_CREATING_COPY

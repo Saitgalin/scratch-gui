@@ -68,7 +68,7 @@ export default appTarget => {
                 canEditTitle
                 isScratchDesktop
                 showTelemetryModal
-                canSave={false}
+                canSave={true}
                 onTelemetryModalCancel={handleTelemetryModalCancel}
                 onTelemetryModalOptIn={handleTelemetryModalOptIn}
                 onTelemetryModalOptOut={handleTelemetryModalOptOut}
@@ -78,7 +78,7 @@ export default appTarget => {
                 backpackVisible
                 showComingSoon
                 backpackHost={backpackHost}
-                canSave={false}
+                canSave={true}
                 onClickLogo={onClickLogo}
             />,
         appTarget);

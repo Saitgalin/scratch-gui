@@ -150,7 +150,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
             }
         }
         isShowingCreatable (props) {
-            return props.canCreateNew && props.isShowingWithoutId;
+            return props.isShowingWithoutId;
         }
         updateProjectToStorage () {
             this.props.onShowSavingAlert();
@@ -235,6 +235,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
                         asset.data,
                         asset.assetId
                     ).then(response => {
+                        console.log("RESPONSE: " + response)
                         // Asset servers respond with {status: ok} for successful POSTs
                         if (response.status !== 'ok') {
                             // Errors include a `code` property, e.g. "Forbidden"
@@ -247,6 +248,9 @@ const ProjectSaverHOC = function (WrappedComponent) {
                 .then(() => this.props.onUpdateProjectData(projectId, savedVMState, requestParams))
                 .then(response => {
                     this.props.onSetProjectUnchanged();
+                    console.log(response)
+                    response.id = 100
+                    console.log("JSON RESPONSE: " + JSON.stringify(response))
                     const id = response.id.toString();
                     if (id && this.props.onUpdateProjectThumbnail) {
                         this.storeProjectThumbnail(id);
