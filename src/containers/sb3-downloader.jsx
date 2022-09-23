@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -30,6 +31,24 @@ class SB3Downloader extends React.Component {
             if (this.props.onSaveFinished) {
                 this.props.onSaveFinished();
             }
+            
+    
+            const url = 'http://localhost:3000/api/uploadScratch';
+            const formData = new FormData();
+            formData.append('name', 'aigiz');
+
+            const blob = new Blob([content], {type: 'text/plain'});
+
+            formData.append("fileboss", blob);
+            formData.append("new_file_name", "aigizboss.sb3")
+
+            const promise = fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log('error'));
+
             downloadBlob(this.props.projectFilename, content);
         });
     }

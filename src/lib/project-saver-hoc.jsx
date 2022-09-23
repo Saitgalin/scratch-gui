@@ -164,7 +164,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
                 .catch(err => {
                     // Always show the savingError alert because it gives the
                     // user the chance to download or retry the save manually.
-                    this.props.onShowAlert('savingError');
+                    //this.props.onShowAlert('savingError');
                     this.props.onProjectError(err);
                 });
         }
@@ -174,7 +174,6 @@ const ProjectSaverHOC = function (WrappedComponent) {
                     this.props.onCreatedProject(response.id.toString(), this.props.loadingState);
                 })
                 .catch(err => {
-                    this.props.onShowAlert('creatingError');
                     this.props.onProjectError(err);
                 });
         }
@@ -190,8 +189,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
                     this.props.onShowCopySuccessAlert();
                 })
                 .catch(err => {
-                    this.props.onShowAlert('creatingError');
-                    this.props.onProjectError(err);
+                    console.log(err)
                 });
         }
         createRemixToStorage () {
@@ -225,43 +223,17 @@ const ProjectSaverHOC = function (WrappedComponent) {
             // while in the process of saving a project (e.g. the
             // serialized project refers to a newer asset than what
             // we just finished saving).
-            const savedVMState = this.props.vm.toJSON();
-            return Promise.all(this.props.vm.assets
-                .filter(asset => !asset.clean)
-                .map(
-                    asset => storage.store(
-                        asset.assetType,
-                        asset.dataFormat,
-                        asset.data,
-                        asset.assetId
-                    ).then(response => {
-                        console.log("RESPONSE: " + response)
-                        // Asset servers respond with {status: ok} for successful POSTs
-                        if (response.status !== 'ok') {
-                            // Errors include a `code` property, e.g. "Forbidden"
-                            return Promise.reject(response.code);
-                        }
-                        asset.clean = true;
-                    })
-                )
-            )
-                .then(() => this.props.onUpdateProjectData(projectId, savedVMState, requestParams))
-                .then(response => {
-                    this.props.onSetProjectUnchanged();
-                    console.log(response)
-                    response.id = 100
-                    console.log("JSON RESPONSE: " + JSON.stringify(response))
-                    const id = response.id.toString();
-                    if (id && this.props.onUpdateProjectThumbnail) {
-                        this.storeProjectThumbnail(id);
-                    }
-                    this.reportTelemetryEvent('projectDidSave');
-                    return response;
-                })
-                .catch(err => {
-                    log.error(err);
-                    throw err; // pass the error up the chain
-                });
+
+            const url = 'http://localhost:3000/api/loadScratch';
+            const fileReader = new FileReader();
+            fileReader.onload = e => {
+                this.props.vm.loadProject(e.target.result);
+            };
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => fileReader.readAsArrayBuffer(blob));
+            
+            return Promise.all();
         }
 
         /**

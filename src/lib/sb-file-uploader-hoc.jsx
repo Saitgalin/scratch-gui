@@ -73,6 +73,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
             this.removeFileObjects();
             // create fileReader
             this.fileReader = new FileReader();
+            
             this.fileReader.onload = this.onload;
             // create <input> element and add it to DOM
             this.inputElement = document.createElement('input');
@@ -151,6 +152,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 let loadingSuccess = false;
                 this.props.vm.loadProject(this.fileReader.result)
                     .then(() => {
+                        console.log("FILE UPLOADING")
                         if (filename) {
                             const uploadedProjectTitle = this.getProjectTitleFromFilename(filename);
                             this.props.onSetProjectTitle(uploadedProjectTitle);
