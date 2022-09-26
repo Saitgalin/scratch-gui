@@ -33,14 +33,16 @@ class SB3Downloader extends React.Component {
             }
             
     
+            const urlParams = new URLSearchParams(document.location.search);
+            const project = urlParams.get('project');
+
             const url = 'http://localhost:3000/api/uploadScratch';
             const formData = new FormData();
-            formData.append('name', 'aigiz');
+            formData.append('project', project);
 
             const blob = new Blob([content], {type: 'text/plain'});
-
             formData.append("fileboss", blob);
-            formData.append("new_file_name", "aigizboss.sb3")
+            
 
             const promise = fetch(url, {
                 method: 'POST',

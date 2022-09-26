@@ -224,11 +224,15 @@ const ProjectSaverHOC = function (WrappedComponent) {
             // serialized project refers to a newer asset than what
             // we just finished saving).
 
-            const url = 'http://localhost:3000/api/loadScratch';
+            const urlParams = new URLSearchParams(document.location.search);
+            const project = urlParams.get('project');
+
+            const url = `http://localhost:3000/api/loadScratch?project=${project}`;
             const fileReader = new FileReader();
             fileReader.onload = e => {
                 this.props.vm.loadProject(e.target.result);
             };
+
             fetch(url)
                 .then(response => response.blob())
                 .then(blob => fileReader.readAsArrayBuffer(blob));
