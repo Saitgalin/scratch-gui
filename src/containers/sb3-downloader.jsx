@@ -51,7 +51,7 @@ class SB3Downloader extends React.Component {
             .then((res) => console.log(res))
             .catch((err) => console.log('error'));
 
-            downloadBlob(this.props.projectFilename, content);
+            //downloadBlob(this.props.projectFilename, content);
         });
     }
     render () {

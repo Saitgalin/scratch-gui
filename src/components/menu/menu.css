@@ -32,10 +32,6 @@
     font-weight: bold;
 }
 
-.menu-item.active,
-.menu-item:hover {
-    background-color: $ui-black-transparent;
-}
 
 .menu-item.hoverable {
     cursor: pointer;
